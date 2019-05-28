@@ -1,0 +1,4 @@
+ideas/
+*.tfstate
+terraform-provider-example
+*.tfstate.backup
