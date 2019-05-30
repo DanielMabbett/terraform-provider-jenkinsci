@@ -41,4 +41,10 @@ resource "jenkinsci_view" "name" {
   name = "view"
 }
 
+# Install a plugin
+resource "jenkinsci_plugin" "ccm" {
+  name    = "CCM"
+  version = "3.2"
+}
+
 ```
