@@ -45,6 +45,7 @@ func Provider() terraform.ResourceProvider {
 			"jenkinsci_project": resourceProject(),
 			"jenkinsci_folder":  resourceFolder(),
 			"jenkinsci_view":    resourceView(),
+			"jenkinsci_plugin":  resourcePlugin(),
 		},
 
 		ConfigureFunc: providerConfigure,
@@ -58,11 +59,6 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		jenkinsAdminPassword: d.Get("jenkins_admin_password").(string),
 		insecure:             d.Get("insecure").(bool),
 	}
-
-	// client, err := config.Client()
-	// if err != nil {
-	// 	return nil, err
-	// }
 
 	//return client, nil
 	return config.Client()

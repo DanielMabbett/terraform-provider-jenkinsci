@@ -15,3 +15,13 @@ resource "jenkinsci_folder" "name" {
 resource "jenkinsci_view" "name" {
   name = "view"
 }
+
+resource "jenkinsci_plugin" "terraform" {
+  name    = "Terraform"
+  version = "1.0.9"
+}
+
+resource "jenkinsci_plugin" "ccm" {
+  name    = "CCM"
+  version = "3.2"
+}
