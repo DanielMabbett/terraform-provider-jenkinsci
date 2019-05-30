@@ -55,23 +55,17 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
           <buildWrappers/>
         </project>`
 
-	//folder := d.Get("folder").(string)
-	//if d.GetOkExists("folder") != nil {
-	//
-	//}
-	// Create Project Default with Folder
-
-	// if d, ok := d.GetOk("folder"); ok {
-	// 	client.CreateJobInFolder(configString, name, folder, "root")
-	// }
-	//----------------
-	// Create Project Default without Folder
-	job, err := client.CreateJob(configString, name)
-	if err != nil {
-		panic(err)
+	if _, ok := d.GetOk("folder"); ok {
+		folder := d.Get("folder").(string)
+		client.CreateJobInFolder(configString, name, folder)
+	} else {
+		_, err := client.CreateJob(configString, name)
+		if err != nil {
+			panic(err)
+		}
 	}
 
-	d.SetId(job.GetName())
+	d.SetId(name)
 	return resourceProjectRead(d, meta)
 }
 

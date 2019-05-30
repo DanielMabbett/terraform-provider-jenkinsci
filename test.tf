@@ -5,7 +5,12 @@ provider "jenkinsci" {
 }
 
 resource "jenkinsci_project" "test" {
-  name = "mytestproj2"
+  name = "mytestproj3"
+}
+
+resource "jenkinsci_project" "test-in-folder" {
+  name = "mytestproj3"
+  folder = "parentFolder"
 }
 
 resource "jenkinsci_folder" "test" {
