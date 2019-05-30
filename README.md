@@ -26,26 +26,34 @@ provider "jenkinsci" {
   jenkins_admin_password   = "..."
 }
 
-# Create a basic Jenkins Project
+
 resource "jenkinsci_project" "test" {
-  name = "mytestproj2"
+  name = "testproj"
 }
 
-# Create a Folder
-resource "jenkinsci_folder" "name" {
-  name = "test"
+resource "jenkinsci_project" "test-in-folder" {
+  name = "testprojinfolder"
+  folder = "${jenkinsci_folder.test.name}"
 }
 
-# Create a jenkins view tab
-resource "jenkinsci_view" "name" {
+resource "jenkinsci_folder" "test" {
+  name = "folder"
+}
+
+resource "jenkinsci_view" "test" {
   name = "view"
 }
 
-# Install a plugin
+resource "jenkinsci_plugin" "terraform" {
+  name    = "Terraform"
+  version = "1.0.9"
+}
+
 resource "jenkinsci_plugin" "ccm" {
   name    = "CCM"
   version = "3.2"
 }
+
 
 ```
 
