@@ -48,3 +48,9 @@ resource "jenkinsci_plugin" "ccm" {
 }
 
 ```
+
+Known Issues
+---------------------
+Due to some of the limitations of gojenkins, we presently: 
+* Cannot delete views
+* Cannot delete folders

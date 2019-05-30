@@ -8,11 +8,11 @@ resource "jenkinsci_project" "test" {
   name = "mytestproj2"
 }
 
-resource "jenkinsci_folder" "name" {
-  name = "test"
+resource "jenkinsci_folder" "test" {
+  name = "folder"
 }
 
-resource "jenkinsci_view" "name" {
+resource "jenkinsci_view" "test" {
   name = "view"
 }
 
