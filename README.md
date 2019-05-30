@@ -19,6 +19,7 @@ sh build.sh
 Using The Provider
 ---------------------
 ```hcl
+# Note that this currently only supports http connections
 provider "jenkinsci" {
   jenkins_endpoint         = "..."
   jenkins_admin_username   = "..."
