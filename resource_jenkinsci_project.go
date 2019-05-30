@@ -82,6 +82,7 @@ func resourceProjectRead(d *schema.ResourceData, meta interface{}) error {
 func resourceProjectUpdate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*jenkins.Jenkins)
 
+	// Change the name for the project
 	if d.HasChange("name") {
 		oldName, newName := d.GetChange("name")
 		client.RenameJob(oldName.(string), newName.(string))

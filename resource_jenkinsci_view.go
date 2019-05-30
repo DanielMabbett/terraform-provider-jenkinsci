@@ -18,6 +18,11 @@ func resourceView() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"view_type": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"description": {
 				Type:     schema.TypeString,
 				Optional: true,

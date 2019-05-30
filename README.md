@@ -25,8 +25,19 @@ provider "jenkinsci" {
   jenkins_admin_password   = "..."
 }
 
-# Create a Jenkins Project
-resource "jenkins_project" "example" {
-  name     = "test"
+# Create a basic Jenkins Project
+resource "jenkinsci_project" "test" {
+  name = "mytestproj2"
 }
+
+# Create a Folder
+resource "jenkinsci_folder" "name" {
+  name = "test"
+}
+
+# Create a jenkins view tab
+resource "jenkinsci_view" "name" {
+  name = "view"
+}
+
 ```
