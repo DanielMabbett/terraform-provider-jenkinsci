@@ -1,15 +1,15 @@
 package main
 
 import (
-        "github.com/hashicorp/terraform/plugin"
-		"github.com/hashicorp/terraform/terraform"
-		"github.com/danielmabbett/terraform-provider-jenkinsci/jenkins"
+	"github.com/DanielMabbett/terraform-provider-jenkinsci"
+	"github.com/hashicorp/terraform/plugin"
+	"github.com/hashicorp/terraform/terraform"
 )
 
 func main() {
-        plugin.Serve(&plugin.ServeOpts{
-                ProviderFunc: func() terraform.ResourceProvider {
-                        return Provider()
-                },
-        })
+	plugin.Serve(&plugin.ServeOpts{
+		ProviderFunc: func() terraform.ResourceProvider {
+			return Provider()
+		},
+	})
 }

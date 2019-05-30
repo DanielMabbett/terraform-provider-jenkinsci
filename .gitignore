@@ -1,4 +1,6 @@
 ideas/
 *.tfstate
 terraform-provider-example
+terraform-provider-jenkinsci
 *.tfstate.backup
+crash.log
