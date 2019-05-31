@@ -20,7 +20,7 @@ func resourceView() *schema.Resource {
 			},
 			"assigned_project": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: false,
+				Optional: true,
 			},
 			// "view_type": {
 			// 	Type:     schema.TypeString,
