@@ -25,9 +25,13 @@ func resourceProject() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
-				// description: "The folder you wish to place the Project within.",
 			},
 			"description": {
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+			"assigned_node": {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
@@ -39,11 +43,37 @@ func resourceProject() *schema.Resource {
 				ForceNew:     true,
 				ValidateFunc: validation.StringInSlice([]string{"false", "true"}, true),
 			},
-			"assigned_node": {
-				Type:     schema.TypeString,
-				Optional: true,
-				ForceNew: true,
-			},
+			// "build_step": {
+			// 	Type:     schema.TypeList,
+			// 	Optional: true,
+			// 	ForceNew: true,
+			// 	MaxItems: 1,
+			// 	Elem: &schema.Resource{
+			// 		Schema: map[string]*schema.Schema{
+			// 			"build_step_type": {
+			// 				Type:     schema.TypeString,
+			// 				Optional: true,
+			// 			},
+			// 			"command": {
+			// 				Type:     schema.TypeString,
+			// 				Optional: true,
+			// 				// ValidateFunc: validation.ValidateJsonString,
+			// 				// StateFunc: func(v interface{}) string {
+			// 				// 	json, _ := structure.NormalizeJsonString(v)
+			// 				// 	return json
+			// 				// },
+			// 			},
+			// 			"redirect_all_requests_to": {
+			// 				Type: schema.TypeString,
+			// 				ConflictsWith: []string{
+			// 					"website.0.build_step_type",
+			// 					"website.0.routing_rules",
+			// 				},
+			// 				Optional: true,
+			// 			},
+			// 		},
+			// 	},
+			// },
 		},
 	}
 }

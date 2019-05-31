@@ -8,6 +8,11 @@ resource "jenkinsci_project" "test" {
   name = "testproj"
 }
 
+
+resource "jenkinsci_view" "test" {
+  name = "view"
+}
+
 resource "jenkinsci_project" "test2" {
   name          = "testproj2"
   description   = "my test project - version 2"
@@ -15,18 +20,15 @@ resource "jenkinsci_project" "test2" {
   assigned_node = "terraform-pod"
 }
 
+resource "jenkinsci_folder" "test" {
+  name = "folder"
+}
+
 resource "jenkinsci_project" "test-in-folder" {
   name   = "testprojinfolder"
   folder = "${jenkinsci_folder.test.name}"
 }
 
-resource "jenkinsci_folder" "test" {
-  name = "folder"
-}
-
-resource "jenkinsci_view" "test" {
-  name = "view"
-}
 
 resource "jenkinsci_plugin" "terraform" {
   name    = "Terraform"

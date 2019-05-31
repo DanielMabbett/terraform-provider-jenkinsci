@@ -18,6 +18,10 @@ func resourceView() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"assigned_project": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: false,
+			},
 			// "view_type": {
 			// 	Type:     schema.TypeString,
 			// 	Optional: true,
@@ -41,6 +45,11 @@ func resourceViewCreate(d *schema.ResourceData, meta interface{}) error {
 		panic(err)
 	}
 
+	if _, ok := d.GetOk("assigned_project"); ok {
+		assignedProject := d.Get("assigned_project").(string)
+		view.AddJob(assignedProject)
+	}
+
 	d.SetId(view.GetName())
 	return resourceViewRead(d, meta)
 }
@@ -50,6 +59,21 @@ func resourceViewRead(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceViewUpdate(d *schema.ResourceData, meta interface{}) error {
+
+	if d.HasChange("assigned_project") {
+		client := meta.(*jenkins.Jenkins)
+		oldProj, newProj := d.GetChange("assigned_project")
+
+		v, err := client.GetView(d.Get("assigned_project").(string))
+		if err != nil {
+			panic(err)
+		}
+
+		v.DeleteJob(oldProj.(string))
+		v.AddJob(newProj.(string))
+
+		d.SetPartial("assigned_project")
+	}
 	return resourceViewRead(d, meta)
 }
 
