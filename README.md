@@ -26,13 +26,19 @@ provider "jenkinsci" {
   jenkins_admin_password   = "..."
 }
 
-
 resource "jenkinsci_project" "test" {
   name = "testproj"
 }
 
+resource "jenkinsci_project" "test2" {
+  name          = "testproj2"
+  description   = "my test project - version 2"
+  disabled      = "true"
+  assigned_node = "terraform-pod"
+}
+
 resource "jenkinsci_project" "test-in-folder" {
-  name = "testprojinfolder"
+  name   = "testprojinfolder"
   folder = "${jenkinsci_folder.test.name}"
 }
 
@@ -53,7 +59,6 @@ resource "jenkinsci_plugin" "ccm" {
   name    = "CCM"
   version = "3.2"
 }
-
 
 ```
 
