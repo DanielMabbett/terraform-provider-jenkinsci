@@ -40,6 +40,10 @@ func resourcePluginRead(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourcePluginUpdate(d *schema.ResourceData, meta interface{}) error {
+	client := meta.(*jenkins.Jenkins)
+	if d.HasChange("version") {
+		client.InstallPlugin(d.Get("name").(string), d.Get("version").(string))
+	}
 	return resourcePluginRead(d, meta)
 }
 
