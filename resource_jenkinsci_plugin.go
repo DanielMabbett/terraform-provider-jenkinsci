@@ -31,7 +31,6 @@ func resourcePluginCreate(d *schema.ResourceData, meta interface{}) error {
 	version := d.Get("version").(string)
 
 	client.InstallPlugin(name, version)
-
 	d.SetId(name)
 	return resourcePluginRead(d, meta)
 }

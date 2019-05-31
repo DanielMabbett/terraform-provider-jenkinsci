@@ -1,0 +1,8 @@
+## CI
+stages:
+  - test
+
+golang test:
+  stage: test
+  script:
+    -  go version
