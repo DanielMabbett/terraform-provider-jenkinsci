@@ -24,24 +24,25 @@ func resourceProject() *schema.Resource {
 			"folder": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: false,
+				ForceNew: true,
 				// description: "The folder you wish to place the Project within.",
 			},
 			"description": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
+				ForceNew: true,
 			},
 			"disabled": {
 				Type:         schema.TypeString,
 				Optional:     true,
 				Default:      "false",
+				ForceNew:     true,
 				ValidateFunc: validation.StringInSlice([]string{"false", "true"}, true),
 			},
 			"assigned_node": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
+				ForceNew: true,
 			},
 		},
 	}
