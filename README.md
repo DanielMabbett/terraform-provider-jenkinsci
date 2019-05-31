@@ -1,6 +1,8 @@
 terraform-provider-jenkinsci
 ==================
 
+[![pipeline status](https://gitlab.com/daniel.mabbett/terraform-provider-jenkinsci/badges/master/pipeline.svg)](https://gitlab.com/daniel.mabbett/terraform-provider-jenkinsci/commits/master)
+
 Building The Provider
 ---------------------
 Clone the repository.
