@@ -1,4 +1,4 @@
-package main
+package jenkinsci
 
 import (
 	"github.com/bndr/gojenkins"
