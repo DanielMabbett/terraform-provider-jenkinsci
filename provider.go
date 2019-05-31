@@ -1,8 +1,6 @@
 package main
 
 import (
-	// "fmt"
-	// "strings"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -52,6 +50,7 @@ func Provider() terraform.ResourceProvider {
 	}
 }
 
+// Provider - Configure it
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	config := Config{
 		jenkinsEndpoint:      d.Get("jenkins_endpoint").(string),
