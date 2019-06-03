@@ -20,7 +20,10 @@ func resourceFolder() *schema.Resource {
 			"description": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
+			},
+			"parent_folder": {
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 		},
 	}
@@ -30,13 +33,23 @@ func resourceFolderCreate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*jenkins.Jenkins)
 	name := d.Get("name").(string)
 
-	// Create folder
-	pFolder, err := client.CreateFolder(name)
-	if err != nil {
-		panic(err)
+	if _, ok := d.GetOk("parent_folder"); ok {
+		// Create a nested folder
+		parentFolder := d.Get("parent_folder").(string)
+		nFolder, err := client.CreateFolder(name, parentFolder)
+		if err != nil {
+			panic(err)
+		}
+		d.SetId(nFolder.GetName())
+	} else {
+		// Create folder normally
+		pFolder, err := client.CreateFolder(name)
+		if err != nil {
+			panic(err)
+		}
+		d.SetId(pFolder.GetName())
 	}
 
-	d.SetId(pFolder.GetName())
 	return resourceFolderRead(d, meta)
 }
 

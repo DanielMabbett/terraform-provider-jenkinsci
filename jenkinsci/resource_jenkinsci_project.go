@@ -117,12 +117,19 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 
 	blockBuildWhenDownstreamBuilding := project.CreateElement("blockBuildWhenDownstreamBuilding")
 	blockBuildWhenDownstreamBuilding.CreateText("false")
+
 	blockBuildWhenUpstreamBuilding := project.CreateElement("blockBuildWhenUpstreamBuilding")
 	blockBuildWhenUpstreamBuilding.CreateText("false")
+
+	// Define triggers
 	triggers := project.CreateElement("triggers")
 	triggers.CreateAttr("class", "vector")
+
+	// Define Concurrenty builds
 	concurrentBuild := project.CreateElement("concurrentBuild")
 	concurrentBuild.CreateText("false")
+
+	// Create other elements that weren't filled
 	project.CreateElement("builders")
 	project.CreateElement("publishers")
 	project.CreateElement("buildWrappers")
