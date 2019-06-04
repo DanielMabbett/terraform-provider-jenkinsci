@@ -43,37 +43,32 @@ func resourceProject() *schema.Resource {
 				ForceNew:     true,
 				ValidateFunc: validation.StringInSlice([]string{"false", "true"}, true),
 			},
-			// "build_step": {
-			// 	Type:     schema.TypeList,
-			// 	Optional: true,
-			// 	ForceNew: true,
-			// 	MaxItems: 1,
-			// 	Elem: &schema.Resource{
-			// 		Schema: map[string]*schema.Schema{
-			// 			"build_step_type": {
-			// 				Type:     schema.TypeString,
-			// 				Optional: true,
-			// 			},
-			// 			"command": {
-			// 				Type:     schema.TypeString,
-			// 				Optional: true,
-			// 				// ValidateFunc: validation.ValidateJsonString,
-			// 				// StateFunc: func(v interface{}) string {
-			// 				// 	json, _ := structure.NormalizeJsonString(v)
-			// 				// 	return json
-			// 				// },
-			// 			},
-			// 			"redirect_all_requests_to": {
-			// 				Type: schema.TypeString,
-			// 				ConflictsWith: []string{
-			// 					"website.0.build_step_type",
-			// 					"website.0.routing_rules",
-			// 				},
-			// 				Optional: true,
-			// 			},
-			// 		},
-			// 	},
-			// },
+			"parameter": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"type": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"id": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"key": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"value": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -95,10 +90,6 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 	keepDependencies := project.CreateElement("keepDependencies")
 	keepDependencies.CreateText("false")
 
-	// Param Definitions Section
-	// parameterDefinitions := project.CreateElement("parameterDefinitions")
-	// parameterDefinitions.CreateElement
-
 	project.CreateElement("properties")
 	scmclass := project.CreateElement("scm")
 	scmclass.CreateAttr("class", "hudson.scm.NullSCM")
@@ -107,17 +98,19 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 	assignedNode := project.CreateElement("assignedNode")
 	assignedNode.CreateText(assNode)
 
-	// Can roam?
+	// Define canRoam settings
 	canRoam := project.CreateElement("canRoam")
 	canRoam.CreateText("true")
 
-	// Define if disabled or not
+	// Define Disabled Settings
 	disabled := project.CreateElement("disabled")
 	disabled.CreateText(disab)
 
+	// Define blockBuildWhenDownstreamBuilding
 	blockBuildWhenDownstreamBuilding := project.CreateElement("blockBuildWhenDownstreamBuilding")
 	blockBuildWhenDownstreamBuilding.CreateText("false")
 
+	// Define blockBuildWhenUpstreamBuilding
 	blockBuildWhenUpstreamBuilding := project.CreateElement("blockBuildWhenUpstreamBuilding")
 	blockBuildWhenUpstreamBuilding.CreateText("false")
 
@@ -133,6 +126,22 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 	project.CreateElement("builders")
 	project.CreateElement("publishers")
 	project.CreateElement("buildWrappers")
+
+	// Param Definitions Section
+	// If Parameter Block Specified then add that
+	if _, ok := d.GetOk("parameter"); ok {
+		// type := d.Get("identity.Type")
+		p := project.CreateElement("parameterDefinitions")
+		p1 := p.CreateElement("hudson.model.StringParameterDefinition")
+		p2a := p1.CreateElement("name")
+		p2b := p1.CreateElement("description")
+		p2c := p1.CreateElement("defaultValue")
+		p2d := p1.CreateElement("trim")
+		p2a.CreateText("my name")
+		p2b.CreateText("the description for param")
+		p2c.CreateText("the default value")
+		p2d.CreateText("false")
+	}
 
 	str, err := doc.WriteToString()
 	if err != nil {

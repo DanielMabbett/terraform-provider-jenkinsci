@@ -6,3 +6,4 @@ terraform-provider-jenkinsci
 crash.log
 .terraform/
 *.backup
+.ideas/
