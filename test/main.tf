@@ -37,9 +37,9 @@ resource "jenkinsci_project" "test3" {
     key = "key"
   }
 
-  additional_config = <<XML
-    <authToken>wRhwR4hpDh8tSX8u</authToken>
-  XML
+  # additional_config = <<XML
+  #   <authToken>wRhwR4hpDh8tSX8u</authToken>
+  # XML
 }
 
 # Simple folder
@@ -70,7 +70,7 @@ resource "jenkinsci_plugin" "ccm" {
   version = "3.2"
 }
 
-resource "jenkinsci_plugin" "ccm" {
+resource "jenkinsci_plugin" "ansicolor" {
   name    = "AnsiColor"
   version = "0.6.2"
 }
