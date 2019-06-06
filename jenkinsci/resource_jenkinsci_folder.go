@@ -68,7 +68,7 @@ func resourceFolderDelete(d *schema.ResourceData, meta interface{}) error {
 	if _, ok := d.GetOk("parent_folder"); ok {
 		// Delete a nested folder
 		parentFolder := d.Get("parent_folder").(string)
-		fullPath := parentFolder + "/" + name
+		fullPath := parentFolder + "/job/" + name
 		_, err := client.DeleteJob(fullPath)
 		if err != nil {
 			panic(err)
