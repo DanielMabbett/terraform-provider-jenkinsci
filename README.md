@@ -13,9 +13,17 @@ cd $GOPATH/src/github.com/terraform
 git clone https://github.com/DanielMabbett/terraform-provider-jenkinsci
 ```
 
-Enter the provider directory and build the provider
+Enter the provider directory and build the provider. This script however will move the artifact into `test/`
 ```bash
 sh build.sh
+```
+
+**Or** you can do a manual build
+```bash
+go get github.com/DanielMabbett/terraform-provider-jenkinsci/jenkinsci
+go get github.com/hashicorp/terraform/helper/schema
+go get github.com/danielmabbett/terraform-provider-jenkinsci/jenkins
+go build -o terraform-provider-jenkinsci
 ```
 
 Using The Provider
