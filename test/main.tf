@@ -37,6 +37,7 @@ resource "jenkinsci_project" "test3" {
     key = "tp-key"
   }
 
+  # If you want to add additional configuration from things such as installed plugins then you can add them as xml
   additional_config = <<XML
     <authToken>asdadadadadasd</authToken>
   XML
