@@ -63,6 +63,12 @@ resource "jenkinsci_folder" "test" {
   name = "folder"
 }
 
+# resource "jenkinsci_folder" "test2" {
+#   name = "2ndfolder"
+#   parent_folder = "${jenkinsci_folder.test.name}"
+# }
+
+
 # Nested Folder
 resource "jenkinsci_folder" "nested-folder" {
   name = "nestedfolder"

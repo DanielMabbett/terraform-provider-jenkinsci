@@ -64,6 +64,22 @@ func resourceFolderUpdate(d *schema.ResourceData, meta interface{}) error {
 func resourceFolderDelete(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*jenkins.Jenkins)
 	name := d.Get("name").(string)
-	client.DeleteJob(name)
+
+	if _, ok := d.GetOk("parent_folder"); ok {
+		// Delete a nested folder
+		parentFolder := d.Get("parent_folder").(string)
+		fullPath := parentFolder + "/" + name
+		_, err := client.DeleteJob(fullPath)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		// Delete a standard folder
+		_, err := client.DeleteJob(name)
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	return nil
 }
