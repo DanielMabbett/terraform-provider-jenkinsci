@@ -1,22 +1,29 @@
-provider "jenkinsci" {
-  jenkins_endpoint       = "http://localhost:8080"
-  jenkins_admin_username = "admin"
-  jenkins_admin_password = "547b55dbeb9240d5b345a772d8905325"
-}
-
-
-# Simple Empty Project with nothing in it
-resource "jenkinsci_project" "test" {
-  name = "testproj"
-}
-
-
+# ----------------------------{Views}---------------------------- #
 # A view with an assigned project in the view. Only works with 1 project assigned so far
 resource "jenkinsci_view" "test" {
   name             = "view2"
   assigned_project = "${jenkinsci_project.test2.name}"
 }
 
+
+# ----------------------------{Folders}---------------------------- #
+# Simple folder
+resource "jenkinsci_folder" "test" {
+  name = "folder"
+}
+
+# Nested Folder
+resource "jenkinsci_folder" "nested-folder" {
+  name          = "nestedfolder"
+  parent_folder = "${jenkinsci_folder.test.name}"
+}
+
+# Simple Empty Project with nothing in it
+resource "jenkinsci_project" "test" {
+  name = "test-project-1a"
+}
+
+# ----------------------------{Projects}---------------------------- #
 # A project with disabled features in and description added 
 resource "jenkinsci_project" "test2" {
   name          = "test-project-2a"
@@ -32,8 +39,8 @@ resource "jenkinsci_project" "test3" {
   assigned_node = "terraform-pod"
 
   parameter {
+    type  = "string"
     value = "tp-value"
-    type  = "tp-string"
     key   = "tp-key"
   }
 
@@ -52,27 +59,9 @@ resource "jenkinsci_project" "test3" {
 
 data "template_file" "cloud-config" {
   template = "${file("${path.module}/project-template.xml")}"
-
-  vars = {
+  vars     = {
     authToken = "anauthtoken"
   }
-}
-
-# Simple folder
-resource "jenkinsci_folder" "test" {
-  name = "folder"
-}
-
-# resource "jenkinsci_folder" "test2" {
-#   name = "2ndfolder"
-#   parent_folder = "${jenkinsci_folder.test.name}"
-# }
-
-
-# Nested Folder
-resource "jenkinsci_folder" "nested-folder" {
-  name = "nestedfolder"
-  parent_folder = "${jenkinsci_folder.test.name}"
 }
 
 # Simple Project in a folder
@@ -81,6 +70,7 @@ resource "jenkinsci_project" "test-in-folder" {
   folder = "${jenkinsci_folder.test.name}"
 }
 
+# ----------------------------{Plugins}---------------------------- #
 # Plugins Examples
 resource "jenkinsci_plugin" "terraform" {
   name = "Terraform"
@@ -95,9 +85,4 @@ resource "jenkinsci_plugin" "ccm" {
 resource "jenkinsci_plugin" "ansicolor" {
   name = "AnsiColor"
   version = "0.6.2"
-}
-
-resource "jenkinsci_view" "dan" {
-  name             = "dan"
-  assigned_project = "${jenkinsci_project.test2.name}"
 }
