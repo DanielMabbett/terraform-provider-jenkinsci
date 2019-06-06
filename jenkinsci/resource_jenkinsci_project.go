@@ -141,10 +141,10 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 		p1 := p0.CreateElement("hudson.model.StringParameterDefinition")
 
 		p2a := p1.CreateElement("name")
-		parameter := d.Get("parameter").(*schema.Set).List()
-		config := parameter[0].(map[string]interface{})
-		key := config["key"].(string)
-		p2a.CreateText(key)
+		// parameter := d.Get("parameter").(*schema.Set).List()
+		// config := parameter[0].(map[string]interface{})
+		// key := config["key"].(string)
+		p2a.CreateText("test")
 
 		p2b := p1.CreateElement("description")
 		p2b.CreateText("the description for param")
