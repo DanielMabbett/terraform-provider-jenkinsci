@@ -37,9 +37,9 @@ resource "jenkinsci_project" "test3" {
     key = "tp-key"
   }
 
-  # additional_config = <<XML
-  #   <authToken>wRhwR4hpDh8tSX8u</authToken>
-  # XML
+  additional_config = <<XML
+    <authToken>asdadadadadasd</authToken>
+  XML
 }
 
 # Simple folder
