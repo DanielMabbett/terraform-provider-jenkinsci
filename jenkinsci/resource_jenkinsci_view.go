@@ -68,8 +68,8 @@ func resourceViewUpdate(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceViewDelete(d *schema.ResourceData, meta interface{}) error {
-	// client := meta.(*jenkins.Jenkins)
-	// name := d.Get("name").(string)
-	// client.DeleteView(name)
+	client := meta.(*jenkins.Jenkins)
+	name := d.Get("name").(string)
+	client.DeleteJob(name)
 	return nil
 }

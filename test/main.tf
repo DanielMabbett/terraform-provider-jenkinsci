@@ -1,4 +1,5 @@
 # ----------------------------{Views}---------------------------- #
+
 # A view with an assigned project in the view. Only works with 1 project assigned so far
 resource "jenkinsci_view" "test" {
   name             = "view2"
@@ -7,6 +8,7 @@ resource "jenkinsci_view" "test" {
 
 
 # ----------------------------{Folders}---------------------------- #
+
 # Simple folder
 resource "jenkinsci_folder" "test" {
   name = "folder"
@@ -18,12 +20,14 @@ resource "jenkinsci_folder" "nested-folder" {
   parent_folder = "${jenkinsci_folder.test.name}"
 }
 
+
+# ----------------------------{Projects}---------------------------- #
+
 # Simple Empty Project with nothing in it
 resource "jenkinsci_project" "test" {
   name = "test-project-1a"
 }
 
-# ----------------------------{Projects}---------------------------- #
 # A project with disabled features in and description added 
 resource "jenkinsci_project" "test2" {
   name          = "test-project-2a"
