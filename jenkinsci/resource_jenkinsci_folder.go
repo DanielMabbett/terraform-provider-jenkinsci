@@ -62,5 +62,8 @@ func resourceFolderUpdate(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceFolderDelete(d *schema.ResourceData, meta interface{}) error {
+	client := meta.(*jenkins.Jenkins)
+	name := d.Get("name").(string)
+	client.DeleteJob(name)
 	return nil
 }
