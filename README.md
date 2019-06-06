@@ -118,4 +118,4 @@ Known Issues
 ---------------------
 Due to some of the limitations of gojenkins, we presently: 
 * Cannot delete views
-* Cannot delete folders
+* Cannot delete folders that are greater than 1 layer deep (more than a folder in a folder at root)
