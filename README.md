@@ -44,10 +44,28 @@ resource "jenkinsci_view" "test" {
 
 # A test project that is inside a folder
 resource "jenkinsci_project" "test2" {
-  name          = "testproj2"
+  name          = "test-project-2a"
   description   = "my test project - version 2"
   disabled      = "true"
   assigned_node = "terraform-pod"
+}
+
+# A test project that is inside a folder
+resource "jenkinsci_project" "test3" {
+  name          = "test-project-3a"
+  description   = "my test project - version 3a"
+  assigned_node = "terraform-pod"
+
+  parameter {
+    value = "tp-value"
+    type = "tp-string"
+    key = "tp-key"
+  }
+
+  # If you want to add additional configuration from things such as installed plugins then you can add them as xml
+  additional_config = <<XML
+    <authToken>asdadadadadasd</authToken>
+  XML
 }
 
 # Simple folder
@@ -76,6 +94,11 @@ resource "jenkinsci_plugin" "terraform" {
 resource "jenkinsci_plugin" "ccm" {
   name    = "CCM"
   version = "3.2"
+}
+
+resource "jenkinsci_plugin" "ansicolor" {
+  name    = "AnsiColor"
+  version = "0.6.2"
 }
 
 ```
