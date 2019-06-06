@@ -39,6 +39,13 @@ resource "jenkinsci_project" "test3" {
 
   # If you want to add additional configuration from things such as installed plugins then you can add them as xml
   additional_config = <<XML
+    <builders>
+      <hudson.tasks.Shell>
+        <command>
+          hostname; echo "hello world";
+        </command>
+      </hudson.tasks.Shell>
+    </builders>
     <authToken>asdadadadadasd</authToken>
   XML
 }
