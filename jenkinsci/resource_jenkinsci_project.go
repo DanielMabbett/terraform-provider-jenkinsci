@@ -47,6 +47,7 @@ func resourceProject() *schema.Resource {
 				Type:     schema.TypeList,
 				Optional: true,
 				Computed: false,
+				ForceNew: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
