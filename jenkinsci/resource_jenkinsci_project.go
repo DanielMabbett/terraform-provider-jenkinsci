@@ -90,7 +90,6 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 	keepDependencies := project.CreateElement("keepDependencies")
 	keepDependencies.CreateText("false")
 
-	project.CreateElement("properties")
 	scmclass := project.CreateElement("scm")
 	scmclass.CreateAttr("class", "hudson.scm.NullSCM")
 
@@ -127,12 +126,15 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 	project.CreateElement("publishers")
 	project.CreateElement("buildWrappers")
 
+	project.CreateElement("properties")
 	// Param Definitions Section
 	// If Parameter Block Specified then add that
 	if _, ok := d.GetOk("parameter"); ok {
 		// type := d.Get("identity.Type")
-		p := project.CreateElement("parameterDefinitions")
-		p1 := p.CreateElement("hudson.model.StringParameterDefinition")
+		properties := project.SelectElement("properties")
+		p := properties.CreateElement("hudson.model.ParametersDefinitionProperty")
+		p0 := p.CreateElement("parameterDefinitions")
+		p1 := p0.CreateElement("hudson.model.StringParameterDefinition")
 		p2a := p1.CreateElement("name")
 		p2b := p1.CreateElement("description")
 		p2c := p1.CreateElement("defaultValue")

@@ -25,6 +25,23 @@ resource "jenkinsci_project" "test2" {
   assigned_node = "terraform-pod"
 }
 
+# A test project that is inside a folder
+resource "jenkinsci_project" "test3" {
+  name          = "testproj3"
+  description   = "my test project - version 3"
+  assigned_node = "terraform-pod"
+
+  parameter {
+    value = "value"
+    type = "string"
+    key = "key"
+  }
+
+  additional_config = <<XML
+    <authToken>wRhwR4hpDh8tSX8u</authToken>
+  XML
+}
+
 # Simple folder
 resource "jenkinsci_folder" "test" {
   name = "folder"
@@ -51,4 +68,9 @@ resource "jenkinsci_plugin" "terraform" {
 resource "jenkinsci_plugin" "ccm" {
   name    = "CCM"
   version = "3.2"
+}
+
+resource "jenkinsci_plugin" "ccm" {
+  name    = "AnsiColor"
+  version = "0.6.2"
 }
