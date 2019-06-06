@@ -54,18 +54,22 @@ func resourceProject() *schema.Resource {
 						"type": {
 							Type:     schema.TypeString,
 							Required: true,
+							ForceNew: true,
 						},
 						"id": {
 							Type:     schema.TypeString,
 							Computed: true,
+							ForceNew: true,
 						},
 						"key": {
 							Type:     schema.TypeString,
 							Required: true,
+							ForceNew: true,
 						},
 						"value": {
 							Type:     schema.TypeString,
 							Required: true,
+							ForceNew: true,
 						},
 					},
 				},
