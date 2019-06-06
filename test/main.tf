@@ -19,7 +19,7 @@ resource "jenkinsci_view" "test" {
 
 # A test project that is inside a folder
 resource "jenkinsci_project" "test2" {
-  name          = "testproj2"
+  name          = "test-project-2a"
   description   = "my test project - version 2"
   disabled      = "true"
   assigned_node = "terraform-pod"
@@ -27,14 +27,14 @@ resource "jenkinsci_project" "test2" {
 
 # A test project that is inside a folder
 resource "jenkinsci_project" "test3" {
-  name          = "testproj3"
-  description   = "my test project - version 3"
+  name          = "test-project-3a"
+  description   = "my test project - version 3a"
   assigned_node = "terraform-pod"
 
   parameter {
-    value = "value"
-    type = "string"
-    key = "key"
+    value = "tp-value"
+    type = "tp-string"
+    key = "tp-key"
   }
 
   # additional_config = <<XML

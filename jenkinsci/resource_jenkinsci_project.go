@@ -130,18 +130,24 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 	// Param Definitions Section
 	// If Parameter Block Specified then add that
 	if _, ok := d.GetOk("parameter"); ok {
-		// type := d.Get("identity.Type")
 		properties := project.SelectElement("properties")
 		p := properties.CreateElement("hudson.model.ParametersDefinitionProperty")
 		p0 := p.CreateElement("parameterDefinitions")
 		p1 := p0.CreateElement("hudson.model.StringParameterDefinition")
+
 		p2a := p1.CreateElement("name")
+		parameter := d.Get("parameter").(*schema.Set).List()
+		config := parameter[0].(map[string]interface{})
+		key := config["key"].(string)
+		p2a.CreateText(key)
+
 		p2b := p1.CreateElement("description")
-		p2c := p1.CreateElement("defaultValue")
-		p2d := p1.CreateElement("trim")
-		p2a.CreateText("my name")
 		p2b.CreateText("the description for param")
+
+		p2c := p1.CreateElement("defaultValue")
 		p2c.CreateText("the default value")
+
+		p2d := p1.CreateElement("trim")
 		p2d.CreateText("false")
 	}
 
