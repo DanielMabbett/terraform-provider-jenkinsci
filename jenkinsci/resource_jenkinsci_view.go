@@ -1,8 +1,7 @@
 package jenkinsci
 
 import (
-	"github.com/bndr/gojenkins"
-	jenkins "github.com/bndr/gojenkins"
+	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -22,16 +21,6 @@ func resourceView() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			// "view_type": {
-			// 	Type:     schema.TypeString,
-			// 	Optional: true,
-			// 	Computed: true,
-			// },
-			// "description": {
-			// 	Type:     schema.TypeString,
-			// 	Optional: true,
-			// 	Computed: true,
-			// },
 		},
 	}
 }
@@ -40,7 +29,7 @@ func resourceViewCreate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*jenkins.Jenkins)
 	name := d.Get("name").(string)
 
-	view, err := client.CreateView(name, gojenkins.LIST_VIEW)
+	view, err := client.CreateView(name, jenkins.LIST_VIEW)
 	if err != nil {
 		panic(err)
 	}
@@ -78,5 +67,8 @@ func resourceViewUpdate(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceViewDelete(d *schema.ResourceData, meta interface{}) error {
+	client := meta.(*jenkins.Jenkins)
+	name := d.Get("name").(string)
+	client.DeleteView(name)
 	return nil
 }
