@@ -2,6 +2,7 @@ package jenkinsci
 
 import (
 	"log"
+	"strings"
 
 	"github.com/beevik/etree"
 	jenkins "github.com/bndr/gojenkins"
@@ -32,6 +33,11 @@ func resourceProject() *schema.Resource {
 				ForceNew: true,
 			},
 			"assigned_node": {
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+			"additional_config": {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
@@ -79,12 +85,14 @@ func resourceProject() *schema.Resource {
 }
 
 func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
+	// vars
 	client := meta.(*jenkins.Jenkins)
 	name := d.Get("name").(string)
 	desc := d.Get("description").(string)
 	assNode := d.Get("assigned_node").(string)
 	disab := d.Get("disabled").(string)
 
+	// Start by Creating a new document with xml layer0 as "project", and include encoding params
 	doc := etree.NewDocument()
 	doc.CreateProcInst("xml", `version="1.0" encoding="UTF-8"`)
 	project := doc.CreateElement("project")
@@ -161,16 +169,31 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 		panic(err)
 	}
 
-	if _, ok := d.GetOk("folder"); ok {
-		folder := d.Get("folder").(string)
-		client.CreateJobInFolder(str, name, folder)
+	if _, ok := d.GetOk("additional_config"); ok {
+		replacement := d.Get("additional_config").(string)
+		fullReplacement := replacement + "</project>"
+		newstr := strings.Replace(str, "</project>", fullReplacement, -1)
+		if _, ok := d.GetOk("folder"); ok {
+			folder := d.Get("folder").(string)
+			client.CreateJobInFolder(newstr, name, folder)
+		} else {
+			_, err := client.CreateJob(newstr, name)
+			if err != nil {
+				panic(err)
+			}
+		}
 	} else {
-		_, err := client.CreateJob(str, name)
-		if err != nil {
-			panic(err)
+		// This was the original output method
+		if _, ok := d.GetOk("folder"); ok {
+			folder := d.Get("folder").(string)
+			client.CreateJobInFolder(str, name, folder)
+		} else {
+			_, err := client.CreateJob(str, name)
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
-
 	d.SetId(name)
 	return resourceProjectRead(d, meta)
 }
