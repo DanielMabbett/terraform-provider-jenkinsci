@@ -12,25 +12,25 @@ func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 
 		Schema: map[string]*schema.Schema{
-			"jenkins_endpoint": &schema.Schema{
+			"jenkins_endpoint": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("JENKINS_ENDPOINT", nil),
 				Description: "The endpoint (URL) for the Jenkins CI Server.",
 			},
-			"jenkins_admin_username": &schema.Schema{
+			"jenkins_admin_username": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("JENKINS_ADMIN_USERNAME", nil),
 				Description: "The Admin Username for the Jenkins CI Server.",
 			},
-			"jenkins_admin_password": &schema.Schema{
+			"jenkins_admin_password": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("JENKINS_ADMIN_PASSWORD", nil),
 				Description: "The Admin Password for the Jenkins CI Server.",
 			},
-			"insecure": &schema.Schema{
+			"insecure": {
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Default:     true,

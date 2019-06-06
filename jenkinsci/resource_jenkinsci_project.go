@@ -18,7 +18,7 @@ func resourceProject() *schema.Resource {
 		Delete: resourceProjectDelete,
 
 		Schema: map[string]*schema.Schema{
-			"name": &schema.Schema{
+			"name": {
 				Type:     schema.TypeString,
 				Required: true,
 			},

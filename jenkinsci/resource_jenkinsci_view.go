@@ -14,11 +14,11 @@ func resourceView() *schema.Resource {
 		Delete: resourceViewDelete,
 
 		Schema: map[string]*schema.Schema{
-			"name": &schema.Schema{
+			"name": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"assigned_project": &schema.Schema{
+			"assigned_project": {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
