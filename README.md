@@ -1,6 +1,6 @@
 terraform-provider-jenkinsci
 ==================
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/DanielMabbett/terraform-provider-jenkinsci)](https://goreportcard.com/report/github.com/DanielMabbett/terraform-provider-jenkinsci)
 [![pipeline status](https://gitlab.com/daniel.mabbett/terraform-provider-jenkinsci/badges/master/pipeline.svg)](https://gitlab.com/daniel.mabbett/terraform-provider-jenkinsci/commits/master)
 
 Building The Provider
