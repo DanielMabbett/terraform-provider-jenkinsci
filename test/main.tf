@@ -13,11 +13,11 @@ resource "jenkinsci_project" "test" {
 
 # A view with an assigned project in the view. Only works with 1 project assigned so far
 resource "jenkinsci_view" "test" {
-  name = "view2"
+  name             = "view2"
   assigned_project = "${jenkinsci_project.test2.name}"
 }
 
-# A test project that is inside a folder
+# A project with disabled features in and description added 
 resource "jenkinsci_project" "test2" {
   name          = "test-project-2a"
   description   = "my test project - version 2"
@@ -25,7 +25,7 @@ resource "jenkinsci_project" "test2" {
   assigned_node = "terraform-pod"
 }
 
-# A test project that is inside a folder
+# A project with additional config added 
 resource "jenkinsci_project" "test3" {
   name          = "test-project-3a"
   description   = "my test project - version 3a"
@@ -33,8 +33,8 @@ resource "jenkinsci_project" "test3" {
 
   parameter {
     value = "tp-value"
-    type = "tp-string"
-    key = "tp-key"
+    type  = "tp-string"
+    key   = "tp-key"
   }
 
   # If you want to add additional configuration from things such as installed plugins then you can add them as xml
@@ -50,6 +50,14 @@ resource "jenkinsci_project" "test3" {
   XML
 }
 
+data "template_file" "cloud-config" {
+  template = "${file("${path.module}/project-template.xml")}"
+
+  vars = {
+    authToken = "anauthtoken"
+  }
+}
+
 # Simple folder
 resource "jenkinsci_folder" "test" {
   name = "folder"
@@ -63,22 +71,27 @@ resource "jenkinsci_folder" "nested-folder" {
 
 # Simple Project in a folder
 resource "jenkinsci_project" "test-in-folder" {
-  name   = "testprojinfolder"
+  name = "testprojinfolder"
   folder = "${jenkinsci_folder.test.name}"
 }
 
 # Plugins Examples
 resource "jenkinsci_plugin" "terraform" {
-  name    = "Terraform"
+  name = "Terraform"
   version = "1.0.9"
 }
 
 resource "jenkinsci_plugin" "ccm" {
-  name    = "CCM"
+  name = "CCM"
   version = "3.2"
 }
 
 resource "jenkinsci_plugin" "ansicolor" {
-  name    = "AnsiColor"
+  name = "AnsiColor"
   version = "0.6.2"
+}
+
+resource "jenkinsci_view" "dan" {
+  name             = "dan"
+  assigned_project = "${jenkinsci_project.test2.name}"
 }
