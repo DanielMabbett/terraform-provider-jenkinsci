@@ -1,8 +1,12 @@
 # ----------------------------{Views}---------------------------- #
+# A simple view
+resource "jenkinsci_view" "test" {
+  name             = "1st-view"
+}
 
 # A view with an assigned project in the view. Only works with 1 project assigned so far
-resource "jenkinsci_view" "test" {
-  name             = "view2"
+resource "jenkinsci_view" "test2" {
+  name             = "2nd-view"
   assigned_project = "${jenkinsci_project.test2.name}"
 }
 
