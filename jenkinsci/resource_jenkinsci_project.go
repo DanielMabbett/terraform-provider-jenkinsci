@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/beevik/etree"
-	jenkins "github.com/bndr/gojenkins"
+	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/helper/validation"
 )

@@ -1,7 +1,7 @@
 package jenkinsci
 
 import (
-	jenkins "github.com/bndr/gojenkins"
+	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 

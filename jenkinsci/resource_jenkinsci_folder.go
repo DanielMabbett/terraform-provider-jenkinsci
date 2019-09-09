@@ -1,7 +1,7 @@
 package jenkinsci
 
 import (
-	jenkins "github.com/bndr/gojenkins"
+	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -36,6 +36,7 @@ func resourceFolderCreate(d *schema.ResourceData, meta interface{}) error {
 	if _, ok := d.GetOk("parent_folder"); ok {
 		// Create a nested folder
 		parentFolder := d.Get("parent_folder").(string)
+		
 		nFolder, err := client.CreateFolder(name, parentFolder)
 		if err != nil {
 			panic(err)

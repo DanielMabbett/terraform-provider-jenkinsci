@@ -7,3 +7,4 @@ crash.log
 .terraform/
 *.backup
 .ideas/
+test/*

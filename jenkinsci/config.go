@@ -5,7 +5,7 @@ import (
 	// "crypto/tls"
 	// "crypto/x509"
 	// "net/http"
-	jenkins "github.com/bndr/gojenkins"
+	jenkins "github.com/DanielMabbett/gojenkins"
 )
 
 // Config is the set of parameters needed to configure the JenkinsCI provider.
