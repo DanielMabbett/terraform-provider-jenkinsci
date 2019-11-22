@@ -1,26 +1,31 @@
 terraform-provider-jenkinsci
 ==================
 
-
 [![Go Report Card](https://goreportcard.com/badge/github.com/DanielMabbett/terraform-provider-jenkinsci)](https://goreportcard.com/report/github.com/DanielMabbett/terraform-provider-jenkinsci)
+[![Build Status](https://travis-ci.org/DanielMabbett/terraform-provider-jenkinsci.svg?branch=master)](https://travis-ci.org/DanielMabbett/terraform-provider-jenkinsci)
+
+(Older CI)
 [![CircleCI](https://circleci.com/gh/DanielMabbett/terraform-provider-jenkinsci.svg?style=svg)](https://circleci.com/gh/DanielMabbett/terraform-provider-jenkinsci)
 
 Building The Provider
 ---------------------
+
 Clone the repository.
 
 ```bash
-mkdir -p $GOPATH/src/github.com/terraform; 
+mkdir -p $GOPATH/src/github.com/terraform;
 cd $GOPATH/src/github.com/terraform
 git clone https://github.com/DanielMabbett/terraform-provider-jenkinsci
 ```
 
-Enter the provider directory and build the provider. This script however will move the artifact into `test/`
+Enter the provider directory and build the provider. Run `make` or:
+
 ```bash
-sh build.sh
+make build
 ```
 
 **Or** you can do a manual build
+
 ```bash
 go get github.com/DanielMabbett/terraform-provider-jenkinsci/jenkinsci
 go get github.com/hashicorp/terraform/helper/schema
@@ -30,6 +35,7 @@ go build -o terraform-provider-jenkinsci
 
 Using The Provider
 ---------------------
+
 ```hcl
 # Note that this currently only supports http connections
 provider "jenkinsci" {
@@ -125,7 +131,7 @@ resource "jenkinsci_pipeline" "test" {
   name = "pipelinejob"
 }
 
-# Credentials 
+# Credentials
 resource "jenkinsci_credential_secret_text" "test" {
   name        = "test"
   domain      = "_"
@@ -160,9 +166,9 @@ If you wish to work on the provider, you'll first need [Go](http://www.golang.or
 First clone the repository to: `$GOPATH/src/github.com/danielmabbett/terraform-provider-jenkinsci`
 
 ```sh
-$ mkdir -p $GOPATH/src/github.com/danielmabbett; cd $GOPATH/src/github.com/danielmabbett
-$ git clone git@github.com:danielmabbett/terraform-provider-jenkinsci
-$ cd $GOPATH/src/github.com/danielmabbett/terraform-provider-jenkinsci
+mkdir -p $GOPATH/src/github.com/danielmabbett; cd $GOPATH/src/github.com/danielmabbett
+git clone git@github.com:danielmabbett/terraform-provider-jenkinsci
+cd $GOPATH/src/github.com/danielmabbett/terraform-provider-jenkinsci
 ```
 
 Once inside the provider directory, you can run `make tools` to install the dependent tooling required to compile the provider.
@@ -185,12 +191,12 @@ GOOS=windows GOARCH=amd64 make build
 In order to run the Unit Tests for the provider, you can run:
 
 ```sh
-$ make test
+make test
 ```
 
 The majority of tests in the provider are Acceptance Tests. It's possible to run the entire acceptance test suite by running `make testacc` - however it's likely you'll want to run a subset, which you can do using a prefix, by running:
 
-```
+```sh
 make testacc TESTARGS='-run=mytest'
 ```
 
@@ -202,8 +208,10 @@ The following Environment Variables must be set in your shell prior to running a
 
 Known Issues
 ---------------------
-Due to some of the limitations of gojenkins, we presently: 
-* Cannot delete folders that are greater than 1 layer deep (more than a folder in a folder at root)
+
+Due to some of the limitations of gojenkins, we presently:
+
+- Cannot delete folders that are greater than 1 layer deep (more than a folder in a folder at root)
 
 Contributors
 ---------------------
