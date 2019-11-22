@@ -1,6 +1,6 @@
 TEST?=$$(go list ./... |grep -v 'vendor'|grep -v 'examples')
 WEBSITE_REPO=github.com/hashicorp/terraform-website
-PKG_NAME=azurerm
+PKG_NAME=jenkinsci
 
 #make sure we catch schema errors during testing
 TF_SCHEMA_PANIC_ON_ERROR=1
