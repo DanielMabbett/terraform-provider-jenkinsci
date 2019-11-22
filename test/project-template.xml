@@ -1,8 +1,0 @@
-<builders>
-  <hudson.tasks.Shell>
-    <command>
-      hostname; echo "hello world";
-    </command>
-  </hudson.tasks.Shell>
-</builders>
-<authToken>${authToken}</authToken>

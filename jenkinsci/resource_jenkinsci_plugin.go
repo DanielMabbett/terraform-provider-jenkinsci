@@ -1,8 +1,10 @@
 package jenkinsci
 
 import (
+	"fmt"
 	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/hashicorp/terraform/helper/schema"
+	"regexp"
 )
 
 func resourcePlugin() *schema.Resource {
@@ -18,8 +20,9 @@ func resourcePlugin() *schema.Resource {
 				Required: true,
 			},
 			"version": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:         schema.TypeString,
+				Required:     true,
+				ValidateFunc: validatePluginVersion,
 			},
 		},
 	}
@@ -54,4 +57,13 @@ func resourcePluginDelete(d *schema.ResourceData, meta interface{}) error {
 	client.UninstallPlugin(name)
 
 	return nil
+}
+
+func validatePluginVersion(v interface{}, k string) (warnings []string, errors []error) {
+	value := v.(string)
+	if !regexp.MustCompile(`^[0-9.]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf("numbers and periods are only are allowed in %q: %q", k, value))
+	}
+
+	return warnings, errors
 }

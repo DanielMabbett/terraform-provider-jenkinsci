@@ -1,11 +1,12 @@
 package jenkinsci
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
-	"github.com/beevik/etree"
 	jenkins "github.com/DanielMabbett/gojenkins"
+	"github.com/beevik/etree"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/helper/validation"
 )
@@ -219,10 +220,10 @@ func resourceProjectDelete(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*jenkins.Jenkins)
 	name := d.Get("name").(string)
 
-	log.Printf("[DEBUG] Delete Jenkins Project %s", d.Id())
+	log.Printf("[DEBUG] Deleting Jenkins Project %s", d.Id())
 	_, err := client.DeleteJob(name)
 	if err != nil {
-		panic(err)
+		return fmt.Errorf("Error deleting the Jenkins Project: %s", err)
 	}
 
 	d.SetId("")

@@ -40,17 +40,19 @@ func Provider() terraform.ResourceProvider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"jenkinsci_project": resourceProject(),
-			"jenkinsci_folder":  resourceFolder(),
-			"jenkinsci_view":    resourceView(),
-			"jenkinsci_plugin":  resourcePlugin(),
+			"jenkinsci_project":                resourceProject(),
+			"jenkinsci_pipeline":               resourcePipeline(),
+			"jenkinsci_folder":                 resourceFolder(),
+			"jenkinsci_view":                   resourceView(),
+			"jenkinsci_plugin":                 resourcePlugin(),
+			"jenkinsci_credential_secret_text": resourceCredentialSecretText(),
 		},
 
 		ConfigureFunc: providerConfigure,
 	}
 }
 
-// Provider - Configure it
+// Provider
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	config := Config{
 		jenkinsEndpoint:      d.Get("jenkins_endpoint").(string),
@@ -59,6 +61,5 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		insecure:             d.Get("insecure").(bool),
 	}
 
-	//return client, nil
 	return config.Client()
 }
