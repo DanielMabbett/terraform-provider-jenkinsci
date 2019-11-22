@@ -24,20 +24,10 @@ Enter the provider directory and build the provider. Run `make` or:
 make build
 ```
 
-**Or** you can do a manual build
-
-```bash
-go get github.com/DanielMabbett/terraform-provider-jenkinsci/jenkinsci
-go get github.com/hashicorp/terraform/helper/schema
-go get github.com/danielmabbett/terraform-provider-jenkinsci/jenkins
-go build -o terraform-provider-jenkinsci
-```
-
 Using The Provider
 ---------------------
 
 ```hcl
-# Note that this currently only supports http connections
 provider "jenkinsci" {
   jenkins_endpoint         = "..."
   jenkins_admin_username   = "..."
@@ -45,7 +35,8 @@ provider "jenkinsci" {
 }
 
 
-# ----------------------------{Views}---------------------------- #
+# Views
+
 resource "jenkinsci_view" "view" {
   name             = "1st-view"
 }
@@ -60,7 +51,7 @@ resource "jenkinsci_view" "test2" {
 }
 
 
-# ----------------------------{Folders}---------------------------- #
+# Folders
 
 resource "jenkinsci_folder" "test" {
   name = "folder"
@@ -73,7 +64,7 @@ resource "jenkinsci_folder" "test-nested-folder" {
   parent_folder = jenkinsci_folder.test.name
 }
 
-# ----------------------------{Projects}---------------------------- #
+# Projects
 
 # Simple Empty Project with nothing in it
 resource "jenkinsci_project" "test" {
@@ -127,11 +118,13 @@ resource "jenkinsci_project" "test-in-folder" {
 }
 
 # Pipelines
+
 resource "jenkinsci_pipeline" "test" {
   name = "pipelinejob"
 }
 
 # Credentials
+
 resource "jenkinsci_credential_secret_text" "test" {
   name        = "test"
   domain      = "_"
@@ -141,7 +134,8 @@ resource "jenkinsci_credential_secret_text" "test" {
   description = "some description now"
 }
 
-# Plugins Examples
+# Plugins
+
 resource "jenkinsci_plugin" "terraform" {
   name = "Terraform"
   version = "1.0.9"
@@ -159,7 +153,8 @@ resource "jenkinsci_plugin" "ansicolor" {
 
 ```
 
-## Developing the Provider
+Developing the Provider
+----------------------
 
 If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.13+ is **required**). You'll also need to correctly setup a [GOPATH](http://golang.org/doc/code.html#GOPATH), as well as adding `$GOPATH/bin` to your `$PATH`.
 
@@ -215,4 +210,5 @@ Due to some of the limitations of gojenkins, we presently:
 
 Contributors
 ---------------------
+
 Contributors are welcome! If you have any problems/ideas, please post these into the issues page.
