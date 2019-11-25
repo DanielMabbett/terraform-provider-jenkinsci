@@ -27,6 +27,8 @@ make build
 Using The Provider
 ---------------------
 
+> More examples are kept in the examples folder.
+
 ```hcl
 provider "jenkinsci" {
   jenkins_endpoint         = "..."
