@@ -3,12 +3,12 @@ package jenkinsci
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"strings"
 
 	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/beevik/etree"
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/hashicorp/terraform/helper/validation"
 )
 
 func resourceProject() *schema.Resource {
@@ -44,11 +44,9 @@ func resourceProject() *schema.Resource {
 				ForceNew: true,
 			},
 			"disabled": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "false",
-				ForceNew:     true,
-				ValidateFunc: validation.StringInSlice([]string{"false", "true"}, true),
+				Type:     schema.TypeBool,
+				Default:  false,
+				Optional: true,
 			},
 			"parameter": {
 				Type:     schema.TypeList,
@@ -91,7 +89,7 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 	name := d.Get("name").(string)
 	desc := d.Get("description").(string)
 	assNode := d.Get("assigned_node").(string)
-	disab := d.Get("disabled").(string)
+	disab := strconv.FormatBool(d.Get("disabled").(bool))
 
 	// Start by Creating a new document with xml layer0 as "project", and include encoding params
 	doc := etree.NewDocument()
