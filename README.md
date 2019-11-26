@@ -4,9 +4,6 @@ terraform-provider-jenkinsci
 [![Go Report Card](https://goreportcard.com/badge/github.com/DanielMabbett/terraform-provider-jenkinsci)](https://goreportcard.com/report/github.com/DanielMabbett/terraform-provider-jenkinsci)
 [![Build Status](https://travis-ci.org/DanielMabbett/terraform-provider-jenkinsci.svg?branch=master)](https://travis-ci.org/DanielMabbett/terraform-provider-jenkinsci)
 
-(Older CI)
-[![CircleCI](https://circleci.com/gh/DanielMabbett/terraform-provider-jenkinsci.svg?style=svg)](https://circleci.com/gh/DanielMabbett/terraform-provider-jenkinsci)
-
 Building The Provider
 ---------------------
 
