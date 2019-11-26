@@ -1,0 +1,86 @@
+package jenkinsci
+
+import (
+	"fmt"
+	"testing"
+
+	"github.com/hashicorp/terraform/helper/acctest"
+	"github.com/hashicorp/terraform/helper/resource"
+	"github.com/hashicorp/terraform/terraform"
+)
+
+func TestAccJenkinsCIFolder_basic(t *testing.T) {
+	resourceName := "jenkinsci_folder.test"
+	rs := acctest.RandString(4)
+
+	config := testAccJenkinsCIFolder_basic(rs)
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccJenkinsCIFolderDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: config,
+				Check: resource.ComposeTestCheckFunc(
+					testCheckAzureRMBastionHostExists(resourceName),
+				),
+			},
+		},
+	})
+}
+
+func testAccJenkinsCIFolder_basic(rString string) string {
+	return fmt.Sprintf(`
+resource "jenkinsci_folder" "test" {
+  name = "acctest%s"
+}
+`, rString)
+}
+
+func testCheckAzureRMBastionHostExists(resourceName string) resource.TestCheckFunc {
+	return func(s *terraform.State) error {
+		client := testAccProvider.Meta()
+
+		rs, ok := s.RootModule().Resources[resourceName]
+		if !ok {
+			return fmt.Errorf("Not found: %q", resourceName)
+		}
+
+		name := rs.Primary.Attributes["name"]
+
+		resp, err := client.jenkins.Jenkins.Get(ctx, resourceGroup, name)
+		if err != nil {
+			if utils.ResponseWasNotFound(resp.Response) {
+				return fmt.Errorf("Bad: Jenkins Folder %q does not exist", rs.Primary.ID)
+			}
+			return fmt.Errorf("Bad: Get on Jenkins Client: %+v", err)
+		}
+
+		return nil
+	}
+}
+
+func testAccJenkinsCIFolderDestroy(s *terraform.State) error {
+	conn := testAccProvider.Meta()
+
+	// 	for _, rs := range s.RootModule().Resources {
+	// 		if rs.Type != "azurerm_bastion_host" {
+	// 			continue
+	// 		}
+	//
+	// 		name := rs.Primary.Attributes["name"]
+	// 		resourceGroup := rs.Primary.Attributes["resource_group_name"]
+	//
+	// 		resp, err := client.Get(ctx, resourceGroup, name)
+	// 		if err != nil {
+	// 			if !utils.ResponseWasNotFound(resp.Response) {
+	// 				return err
+	// 			}
+	// 		}
+	//
+	// 		return nil
+	// 	}
+
+	return nil
+}
