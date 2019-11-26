@@ -2,9 +2,10 @@ package jenkinsci
 
 import (
 	"fmt"
+	"regexp"
+
 	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/hashicorp/terraform/helper/schema"
-	"regexp"
 )
 
 func resourcePlugin() *schema.Resource {

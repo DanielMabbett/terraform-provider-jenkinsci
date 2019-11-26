@@ -2,6 +2,7 @@ package jenkinsci
 
 import (
 	"fmt"
+
 	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/hashicorp/terraform/helper/schema"
 )

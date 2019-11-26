@@ -2,6 +2,7 @@ package jenkinsci
 
 import (
 	"fmt"
+
 	jenkins "github.com/DanielMabbett/gojenkins"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -42,7 +43,10 @@ func resourceViewCreate(d *schema.ResourceData, meta interface{}) error {
 
 	assigedProjects := d.Get("assigned_projects").([]interface{})
 	for _, project := range assigedProjects {
-		view.AddJob(project.(string))
+		_, err := view.AddJob(project.(string))
+		if err != nil {
+			return fmt.Errorf("Error adding %s to Jenkins view %s: %s", project.(string), name, err)
+		}
 	}
 
 	d.SetId(view.GetName())
