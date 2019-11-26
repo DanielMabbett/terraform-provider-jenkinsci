@@ -174,11 +174,14 @@ func resourceProjectCreate(d *schema.ResourceData, meta interface{}) error {
 		newstr := strings.Replace(str, "</project>", fullReplacement, -1)
 		if _, ok := d.GetOk("folder"); ok {
 			folder := d.Get("folder").(string)
-			client.CreateJobInFolder(newstr, name, folder)
+			_, err := client.CreateJobInFolder(newstr, name, folder)
+			if err != nil {
+				return fmt.Errorf("Error creating the Jenkins job in the folder %s: %s", folder, err)
+			}
 		} else {
 			_, err := client.CreateJob(newstr, name)
 			if err != nil {
-				panic(err)
+				return fmt.Errorf("Error creating the Jenkins job: %s", err)
 			}
 		}
 	} else {

@@ -41,15 +41,16 @@ func resourceFolderCreate(d *schema.ResourceData, meta interface{}) error {
 		if err != nil {
 			return fmt.Errorf("Error creating the Jenkins Folder: %s", err)
 		}
-		d.SetId(nFolder.GetName())
 
+		d.SetId(nFolder.GetName())
 	} else {
 		pFolder, err := client.CreateFolder(name)
+
 		if err != nil {
 			return fmt.Errorf("Error creating the Jenkins Folder: %s", err)
 		}
-		d.SetId(pFolder.GetName())
 
+		d.SetId(pFolder.GetName())
 	}
 
 	return resourceFolderRead(d, meta)

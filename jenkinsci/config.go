@@ -18,8 +18,6 @@ type Config struct {
 
 // Client Config
 func (c *Config) Client() (*jenkins.Jenkins, error) {
-
-	// Create client connection
 	client := jenkins.CreateJenkins(nil, c.jenkinsEndpoint, c.jenkinsAdminUsername, c.jenkinsAdminPassword)
 
 	_, err := client.Init()

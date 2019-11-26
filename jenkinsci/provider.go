@@ -7,10 +7,7 @@ import (
 
 // Provider Jenkinsci
 func Provider() terraform.ResourceProvider {
-
-	// The Provider for Jenkins
 	return &schema.Provider{
-
 		Schema: map[string]*schema.Schema{
 			"jenkins_endpoint": {
 				Type:        schema.TypeString,
@@ -52,7 +49,6 @@ func Provider() terraform.ResourceProvider {
 	}
 }
 
-// Provider
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	config := Config{
 		jenkinsEndpoint:      d.Get("jenkins_endpoint").(string),

@@ -10,7 +10,6 @@ func resourceView() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceViewCreate,
 		Read:   resourceViewRead,
-		// Update: resourceViewUpdate,
 		Delete: resourceViewDelete,
 
 		Schema: map[string]*schema.Schema{
@@ -52,25 +51,6 @@ func resourceViewCreate(d *schema.ResourceData, meta interface{}) error {
 
 func resourceViewRead(d *schema.ResourceData, meta interface{}) error {
 	return nil
-}
-
-func resourceViewUpdate(d *schema.ResourceData, meta interface{}) error {
-
-	// 	if d.HasChange("assigned_project") {
-	// 		client := meta.(*jenkins.Jenkins)
-	// 		oldProj, newProj := d.GetChange("assigned_project")
-	//
-	// 		v, err := client.GetView(d.Get("assigned_project").(string))
-	// 		if err != nil {
-	// 			return fmt.Errorf("Error getting the Jenkins View: %s", err)
-	// 		}
-	//
-	// 		v.DeleteJob(oldProj.(string))
-	// 		v.AddJob(newProj.(string))
-	//
-	// 		d.SetPartial("assigned_project")
-	// 	}
-	return resourceViewRead(d, meta)
 }
 
 func resourceViewDelete(d *schema.ResourceData, meta interface{}) error {
